@@ -24,7 +24,7 @@ public class UsuarioDao extends DAOAbstract<Usuario> {
     }
 
     public boolean verificacionLogin(String user, String pass) {
-        Query query = this.getEntityManager().createQuery("Select u from Usuario u where u.nombreUsuario= '" + user + "' AND u.password= '" + pass + "'");
+        Query query = this.getEntityManager().createQuery("Select u from Usuario u where u.user= '" + user + "' AND u.password= '" + pass + "'");
 
         if (query.getResultList().isEmpty()) {
             return false;

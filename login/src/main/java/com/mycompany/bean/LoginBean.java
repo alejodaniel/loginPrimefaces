@@ -5,13 +5,15 @@
  */
 package com.mycompany.bean;
 
-
 import com.mycompany.DAO.DataSource;
+import com.mycompany.DAO.UsuarioDao;
+import com.mycompany.dominio.Usuario;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.swing.JOptionPane;
 import org.primefaces.context.RequestContext;
 
 /**
@@ -28,8 +30,8 @@ public class LoginBean {
     private boolean logeado;
 
     public LoginBean() {
-       DataSource.getEntityManager();
-       
+        DataSource.getEntityManager();
+
     }
 
     /**
@@ -72,13 +74,16 @@ public class LoginBean {
     }
 
     public void login(ActionEvent action) {
-        
+
         RequestContext context = RequestContext.getCurrentInstance();
         FacesMessage msg = null;
-        if (getTexto() != null && getTexto().equals("alejo") && getPassword() != null && getPassword().equals("12345")) {
+        // Usuario us = new Usuario();
+        UsuarioDao ud = new UsuarioDao(null);
+        boolean estado = ud.verificacionLogin(getTexto(), getPassword());
+        if (estado == true) {
+            ud = new UsuarioDao(null);
             msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenido", getTexto());
             logeado = true;
-           
         } else {
             msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "ERROR AL ACCEDER", "Credenciales incorrectos");
             logeado = false;
@@ -86,9 +91,10 @@ public class LoginBean {
         FacesContext.getCurrentInstance().addMessage(null, msg);
         context.addCallbackParam("estaLogeado", logeado);
         if (logeado) {
-            context.addCallbackParam("view","home.xhtml");
+            context.addCallbackParam("view", "home.xhtml");
+        } else if (estado == false) {
+            context.addCallbackParam("view", "login.xhtml");
         }
-        
 
-    }   
+    }
 }
