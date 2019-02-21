@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>SENADI</title>
+    </h:head>
+    <h:body>
+        <p:growl id="mensaje"/>
+
+        <h:form>
+            <h:panelGroup  style="display:block; text-align:center">
+                <div>
+                    <label>USERNAME :</label>              
+                    <p:inputText value="#{loginBean.texto}" id="username"
+                                 label="USERNAME:"/>
+                </div>
+                <div>
+                    <label>PASSWORD :</label>    
+                    <p:password value="#{loginBean.password}" id="password" 
+                                label="PASSWORD:"/>
+
+
+                </div>
+                <div>
+                    <p:commandButton id="loginButton" value="Login"
+                                     actionListener="#{loginBean.login}"
+                                     update="mensaje"
+                                     oncomplete="manejarLogin(xhr, status, args)"/>
+                </div>
+            </h:panelGroup>
+
+        </h:form>
+    </h:body>
+    <script>
+        //<![CDATA[
+        function manejarLogin(xhr, status, args) {
+            if (args.estaLogeado) {
+                console.log(args);
+
+                setTimeout(function () {
+                    window.location = args.view;
+
+                }, 500);
+            }
+        }
+        //]]>
+    </script>
+
+</html>
+
