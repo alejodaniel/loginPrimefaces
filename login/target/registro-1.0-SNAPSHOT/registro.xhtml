@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+     <h:head>
+        <title>LOGIN</title>
+        
+        <!-- Compiled and minified CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"/>
+        <!-- Compiled and minified JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    </h:head>
+    <h:body styleClass="black lighten-5">
+        <p:growl id="mensaje"/>
+
+        <div class="valign-wrapper" id="login-page">
+            <div class="container">
+                <div class="center-align">
+                    <div class="row">
+                        <div class="col s6 offset-s3">
+                            <div class="card">
+                                <div class="card-content">
+                                    <h4>REGISTRO DE USUARIO</h4>
+                                    <img class="responsive-image" style="max-width: 120px" src="https://www.wur.nl/upload_mm/8/a/c/2538ed0c-1e9f-402a-bc2c-e73be10ff8fd_13191524_s_e8126203_490x330.jpg"/>
+                                    <div class="left-align">
+                                        <h:form id="login-form">
+                                            <div class="row">
+                                                <div>
+                                                    <label>NUEVO USERNAME</label>     
+
+                                                    <p:inputText value="#{registerBean.user}" id="username"
+                                                                 required="true" requiredMessage="Falta ingresasr el usuario en este campo"
+                                                                 label="USERNAME:"/>
+                                                </div>
+                                                <div>
+                                                    <label>PASSWORD:</label>    
+                                                    <p:password value="#{registerBean.password}" id="password" 
+                                                                required="true" requiredMessage="Falta ingresar la contraseña en este campo"
+                                                                label="PASSWORD:"/>
+
+
+                                                </div>
+                                                <div class="center-align"> 
+                                                    <p:commandButton id="loginButton" value="REGISTRAR USUARIO"  
+                                                                     actionListener="#{registerBean.register}"
+                                                                     update="mensaje"
+                                                                     oncomplete="manejarLogin(xhr, status, args)" styleClass="btn-large"/>
+                                                </div>
+                                                
+                                            </div>                                               
+                                        </h:form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </h:body>
+    <script>
+        //<![CDATA[
+        function manejarLogin(xhr, status, args) {
+            if (args.estaLogeado) {
+                console.log(args);
+                setTimeout(function () {
+                    window.location = args.view;
+                }, 500);
+            }
+        }
+        //]]>
+    </script>
+</html>

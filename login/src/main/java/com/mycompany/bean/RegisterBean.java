@@ -5,15 +5,13 @@
  */
 package com.mycompany.bean;
 
-import com.mycompany.DAO.DataSource;
 import com.mycompany.DAO.UsuarioDao;
 import com.mycompany.dominio.Usuario;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-import javax.swing.JOptionPane;
 import org.primefaces.context.RequestContext;
 
 /**
@@ -21,7 +19,7 @@ import org.primefaces.context.RequestContext;
  * @author Iepiadm
  */
 //se crea un bean 
-@SessionScoped
+@ViewScoped
 @ManagedBean(name = "registerBean")
 public class RegisterBean {
     private Usuario usuario;
@@ -30,7 +28,7 @@ public class RegisterBean {
     private boolean logeado;
 
     public RegisterBean() {
-        DataSource.getEntityManager();
+//        DataSource.getEntityManager();
 
     }
 
@@ -57,7 +55,7 @@ public class RegisterBean {
         this.logeado = logeado;
     }
 
-    public void Register(ActionEvent action) {
+    public void register(ActionEvent action) {
         UsuarioDao usuarioDao = new UsuarioDao(usuario);
 
         RequestContext context = RequestContext.getCurrentInstance();
@@ -68,18 +66,18 @@ public class RegisterBean {
        
         boolean estado = usuarioDao.guardarUsuario(us);
         if (estado == true) {
-           msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "El dato se gaurdo",user);
+           msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "el Usuario y contraseña fueron guardados correctamente",user);
             setLogeado(true);
         } else {
-            msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "No se guardo el dato",null);
+            msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "No se guardaron los datos ingresados",null);
             setLogeado(false);
         }
         FacesContext.getCurrentInstance().addMessage(null, msg);
         context.addCallbackParam("estaLogeado", isLogeado());
         if (isLogeado()) {
-            context.addCallbackParam("view", "home.xhtml");
+            context.addCallbackParam("view", "index.xhtml");
         } else if (estado == false) {
-            context.addCallbackParam("view", "login.xhtml");
+            context.addCallbackParam("view", "home.xhtml");
         }
 
     }

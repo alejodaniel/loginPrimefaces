@@ -6,3 +6,4 @@ com\mycompany\DAO\UsuarioDao.class
 com\mycompany\DAO\ConfigXml.class
 com\mycompany\dominio\Usuario.class
 com\mycompany\dominio\Usuario_.class
+com\mycompany\bean\RegisterBean.class
