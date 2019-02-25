@@ -43,8 +43,8 @@ public class UsuarioDao extends DAOAbstract<Usuario> {
         return query.getResultList();
     }
 
-    public boolean usuariosIguales(String user, String pass) {
-        Query query = this.getEntityManager().createQuery("Select u from Usuario u where u.nombreUsuario= '" + user + "' AND u.password= '" + pass + "'");
+    public boolean usuariosIguales(String user) {
+        Query query = this.getEntityManager().createQuery("Select u from Usuario u where u.user= '" + user + "'");
 
         if (query.getResultList().isEmpty()) {
             return false;

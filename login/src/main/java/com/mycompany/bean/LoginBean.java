@@ -31,6 +31,7 @@ public class LoginBean {
 
     public LoginBean() {
         DataSource.getEntityManager();
+        
 
     }
 

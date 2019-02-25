@@ -5,9 +5,9 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://java.sun.com/jsf/core">
 
-     <h:head>
+    <h:head>
         <title>LOGIN</title>
-        
+
         <!-- Compiled and minified CSS -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"/>
         <!-- Compiled and minified JavaScript -->
@@ -15,7 +15,7 @@
     </h:head>
     <h:body styleClass="black lighten-5">
         <p:growl id="mensaje"/>
-
+        
         <div class="valign-wrapper" id="login-page">
             <div class="container">
                 <div class="center-align">
@@ -38,18 +38,24 @@
                                                 <div>
                                                     <label>PASSWORD:</label>    
                                                     <p:password value="#{registerBean.password}" id="password" 
-                                                                required="true" requiredMessage="Falta ingresar la contraseña en este campo"
+                                                                required="true" validatorMessage="las claves no coinciden" weakLabel="debil" strongLabel="medio" goodLabel="bueno"
+                                                                label="PASSWORD:" match="password1" feedback="true" promptLabel="Ingrese la clave"/>
+                                                </div>
+                                                <div>
+                                                    <label>REPETIR CONTRASEÑA:</label>    
+                                                    <p:password value="password1" id="password1" 
+                                                                required="true" requiredMessage="Falta la contraseña"
                                                                 label="PASSWORD:"/>
 
 
                                                 </div>
                                                 <div class="center-align"> 
                                                     <p:commandButton id="loginButton" value="REGISTRAR USUARIO"  
-                                                                     actionListener="#{registerBean.register}"
+                                                                     actionListener="#{registerBean.register}" 
                                                                      update="mensaje"
-                                                                     oncomplete="manejarLogin(xhr, status, args)" styleClass="btn-large"/>
+                                                                     oncomplete="manejarLogin(xhr, status, args)" styleClass="btn-large" />
                                                 </div>
-                                                
+
                                             </div>                                               
                                         </h:form>
                                     </div>
