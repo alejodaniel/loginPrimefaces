@@ -66,7 +66,33 @@ public class RegisterBean {
        
         boolean estado = usuarioDao.guardarUsuario(us);
         if (estado == true) {
-           msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "el Usuario y contraseña fueron guardados correctamente",user);
+           msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "El Usuario y contraseña fueron guardados correctamente",user);
+            setLogeado(true);
+        } else {
+            msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "No se guardaron los datos ingresados",null);
+            setLogeado(false);
+        }
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+        context.addCallbackParam("estaLogeado", isLogeado());
+        if (isLogeado()) {
+            context.addCallbackParam("view", "index.xhtml");
+        } else if (estado == false) {
+            context.addCallbackParam("view", "home.xhtml");
+        }
+
+    }
+    public void newUser(ActionEvent action) {
+        UsuarioDao usuarioDao = new UsuarioDao(usuario);
+
+        RequestContext context = RequestContext.getCurrentInstance();
+        FacesMessage msg = null;
+         Usuario us = new Usuario();
+         us.setUser(getUser());
+         us.setPassword(getPassword());
+       
+        boolean estado = usuarioDao.guardarUsuario(us);
+        if (estado == true) {
+           msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "El Usuario y contraseña fueron guardados correctamente",user);
             setLogeado(true);
         } else {
             msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "No se guardaron los datos ingresados",null);

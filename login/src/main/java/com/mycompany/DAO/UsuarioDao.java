@@ -34,7 +34,7 @@ public class UsuarioDao extends DAOAbstract<Usuario> {
     }
 
     public Usuario obtenerUsuario(String user, String pass) {
-        Query query = this.getEntityManager().createQuery("Select u from Usuario u where u.nombreUsuario= '" + user + "' AND u.password= '" + pass + "'");
+        Query query = this.getEntityManager().createQuery("Select u from Usuario u where u.user= '" + user + "' AND u.password= '" + pass + "'");
         return (Usuario) query.getSingleResult();
     }
 

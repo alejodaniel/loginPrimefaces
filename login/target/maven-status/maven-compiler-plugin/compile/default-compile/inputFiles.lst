@@ -4,5 +4,8 @@ C:\Users\Iepiadm\Desktop\loginPrimefaces\login\src\main\java\com\mycompany\DAO\D
 C:\Users\Iepiadm\Desktop\loginPrimefaces\login\src\main\java\com\mycompany\DAO\UsuarioDao.java
 C:\Users\Iepiadm\Desktop\loginPrimefaces\login\src\main\java\com\mycompany\DAO\ConfigXml.java
 C:\Users\Iepiadm\Desktop\loginPrimefaces\login\src\main\java\com\mycompany\models\Login.java
+C:\Users\Iepiadm\Desktop\loginPrimefaces\login\src\main\java\com\mycompany\dominio\Personas.java
+C:\Users\Iepiadm\Desktop\loginPrimefaces\login\src\main\java\com\mycompany\filter\AuthorizationFilter.java
 C:\Users\Iepiadm\Desktop\loginPrimefaces\login\src\main\java\com\mycompany\bean\RegisterBean.java
 C:\Users\Iepiadm\Desktop\loginPrimefaces\login\src\main\java\com\mycompany\bean\LoginBean.java
+C:\Users\Iepiadm\Desktop\loginPrimefaces\login\src\main\java\com\mycompany\util\SessionUtils.java

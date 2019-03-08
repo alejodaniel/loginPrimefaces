@@ -23,7 +23,7 @@ public class DataSource {
             EntityManagerFactory emf = Persistence.createEntityManagerFactory("LoginPU", config.Conection());
             em = emf.createEntityManager();
             if (em == getEntityManager()) {
-                System.out.println("Hola");
+                System.out.println("EJEMPLO EXITOSO");
 
             } else {
             }

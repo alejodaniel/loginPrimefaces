@@ -3,6 +3,7 @@
   <persistence-unit name="LoginPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <non-jta-data-source>java:app/LoginPU</non-jta-data-source>
+    <class>com.mycompany.dominio.Personas</class>
     <class>com.mycompany.dominio.Usuario</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>

@@ -30,7 +30,7 @@
                                                 <div>
                                                     <label>USERNAME:</label>     
 
-                                                    <p:inputText value="#{loginBean.texto}" id="username"
+                                                    <p:inputText value="#{loginBean.user}" id="username"
                                                                  required="true" requiredMessage="Falta el usuario"
                                                                  label="USERNAME:"/>
                                                 </div>
@@ -69,6 +69,9 @@
         function manejarLogin(xhr, status, args) {
             if (args.estaLogeado) {
                 console.log(args);
+                console.log(xhr);
+                console.log(status);
+            
                 setTimeout(function () {
                     window.location = args.view;
                 }, 500);
