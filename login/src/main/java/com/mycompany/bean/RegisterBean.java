@@ -22,6 +22,7 @@ import org.primefaces.context.RequestContext;
 @ViewScoped
 @ManagedBean(name = "registerBean")
 public class RegisterBean {
+
     private Usuario usuario;
     private String user;
     private String password;
@@ -32,7 +33,6 @@ public class RegisterBean {
 
     }
 
-   
     public String getPassword() {
         return password;
     }
@@ -60,16 +60,16 @@ public class RegisterBean {
 
         RequestContext context = RequestContext.getCurrentInstance();
         FacesMessage msg = null;
-         Usuario us = new Usuario();
-         us.setUser(getUser());
-         us.setPassword(getPassword());
-       
+        Usuario us = new Usuario();
+        us.setUser(getUser());
+        us.setPassword(getPassword());
+
         boolean estado = usuarioDao.guardarUsuario(us);
         if (estado == true) {
-           msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "El Usuario y contraseña fueron guardados correctamente",user);
+            msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "El Usuario y contraseña fueron guardados correctamente", user);
             setLogeado(true);
         } else {
-            msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "No se guardaron los datos ingresados",null);
+            msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "No se guardaron los datos ingresados", null);
             setLogeado(false);
         }
         FacesContext.getCurrentInstance().addMessage(null, msg);
@@ -81,29 +81,42 @@ public class RegisterBean {
         }
 
     }
-    public void newUser(ActionEvent action) {
-        UsuarioDao usuarioDao = new UsuarioDao(usuario);
 
+    public void newUser(ActionEvent action) {
         RequestContext context = RequestContext.getCurrentInstance();
         FacesMessage msg = null;
-         Usuario us = new Usuario();
-         us.setUser(getUser());
-         us.setPassword(getPassword());
-       
-        boolean estado = usuarioDao.guardarUsuario(us);
-        if (estado == true) {
-           msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "El Usuario y contraseña fueron guardados correctamente",user);
-            setLogeado(true);
+
+        UsuarioDao usuarioDao = new UsuarioDao(usuario);
+        if (usuario != null) {
+            usuario.setUser(user);
+            usuario.setPassword(password);
+            boolean estado = usuarioDao.editarUsuario(usuario);
+            if (estado == true) {
+                msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "El usuario se edito correctamente", user);
+            } else {
+                msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "No se editaron los datos", null);
+            }
         } else {
-            msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "No se guardaron los datos ingresados",null);
-            setLogeado(false);
-        }
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-        context.addCallbackParam("estaLogeado", isLogeado());
-        if (isLogeado()) {
-            context.addCallbackParam("view", "home.xhtml");
-        } else if (estado == false) {
-            context.addCallbackParam("view", "index.xhtml");
+            Usuario us = new Usuario();
+            us.setUser(getUser());
+            us.setPassword(getPassword());
+
+            boolean estado = usuarioDao.guardarUsuario(us);
+            if (estado == true) {
+                msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "El Usuario y contraseña fueron guardados correctamente", user);
+                setLogeado(true);
+            } else {
+                msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "No se guardaron los datos ingresados", null);
+                setLogeado(false);
+            }
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+            context.addCallbackParam("estaLogeado", isLogeado());
+            if (isLogeado()) {
+                context.addCallbackParam("view", "home.xhtml");
+            } else if (estado == false) {
+                context.addCallbackParam("view", "index.xhtml");
+            }
+
         }
 
     }
