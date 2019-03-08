@@ -101,9 +101,9 @@ public class RegisterBean {
         FacesContext.getCurrentInstance().addMessage(null, msg);
         context.addCallbackParam("estaLogeado", isLogeado());
         if (isLogeado()) {
-            context.addCallbackParam("view", "index.xhtml");
-        } else if (estado == false) {
             context.addCallbackParam("view", "home.xhtml");
+        } else if (estado == false) {
+            context.addCallbackParam("view", "index.xhtml");
         }
 
     }
