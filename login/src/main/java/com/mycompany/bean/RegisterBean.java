@@ -7,6 +7,7 @@ package com.mycompany.bean;
 
 import com.mycompany.DAO.UsuarioDao;
 import com.mycompany.dominio.Usuario;
+import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -27,6 +28,7 @@ public class RegisterBean {
     private String user;
     private String password;
     private boolean logeado;
+    private List<Usuario> usuarios = null;
 
     public RegisterBean() {
 //        DataSource.getEntityManager();
@@ -57,7 +59,8 @@ public class RegisterBean {
 
     public void register(ActionEvent action) {
         UsuarioDao usuarioDao = new UsuarioDao(usuario);
-
+        System.out.println("user:"+user);
+        System.out.println("pass:"+password);
         RequestContext context = RequestContext.getCurrentInstance();
         FacesMessage msg = null;
         Usuario us = new Usuario();
@@ -68,6 +71,8 @@ public class RegisterBean {
         if (estado == true) {
             msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "El Usuario y contraseña fueron guardados correctamente", user);
             setLogeado(true);
+            
+           
         } else {
             msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "No se guardaron los datos ingresados", null);
             setLogeado(false);
@@ -133,5 +138,19 @@ public class RegisterBean {
      */
     public void setUser(String user) {
         this.user = user;
+    }
+
+    /**
+     * @return the usuarios
+     */
+    public List<Usuario> getUsuarios() {
+        return usuarios;
+    }
+
+    /**
+     * @param usuarios the usuarios to set
+     */
+    public void setUsuarios(List<Usuario> usuarios) {
+        this.usuarios = usuarios;
     }
 }

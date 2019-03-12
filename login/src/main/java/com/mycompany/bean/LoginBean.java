@@ -31,6 +31,7 @@ import org.primefaces.context.RequestContext;
 public class LoginBean {
 
     private String user;
+    private String accion;
     private String password;
     private boolean logeado = false;
     private List<Usuario> usuarios = null;
@@ -162,4 +163,27 @@ public class LoginBean {
     /**
      * @return the lista
      */
+    
+    public void leer (Usuario usuario){
+       usuario24 = usuario;
+       this.setAccion("M");
+        
+    }
+   public void modificar(){
+       UsuarioDao ud = new UsuarioDao(usuario24);
+       ud.editarUsuario(usuario24);
+   }
+    /**
+     * @return the accion
+     */
+    public String getAccion() {
+        return accion;
+    }
+
+    /**
+     * @param accion the accion to set
+     */
+    public void setAccion(String accion) {
+        this.accion = accion;
+    }
 }
