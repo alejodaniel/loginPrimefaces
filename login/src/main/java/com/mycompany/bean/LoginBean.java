@@ -121,6 +121,7 @@ public class LoginBean {
         if (estado == true) {
             ud = new UsuarioDao(null);
             msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenido", getUser());
+            System.out.println("WELCOME:  "+user);
             setLogeado(true);
         } else {
             msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "ERROR AL ACCEDER", "Credenciales incorrectos");
@@ -172,7 +173,7 @@ public class LoginBean {
     }
 
     public void modificar(Usuario us) {
-        System.out.println("Usuario editado" + user);
+        System.out.println("El Usuario  :" + us + "fue editado correctamente");
 
         Usuarioucc ucc = new Usuarioucc();
         ucc.editarUsuario(us);
@@ -180,7 +181,7 @@ public class LoginBean {
     }
 
     public void eliminar(Usuario us) {
-        System.out.println("Usuario eliminado" + us);
+        System.out.println("El Usuario :" + us + "fue eliminado por :" +user);
 
         Usuarioucc ucc = new Usuarioucc();
         ucc.deleteUsuario(us);
