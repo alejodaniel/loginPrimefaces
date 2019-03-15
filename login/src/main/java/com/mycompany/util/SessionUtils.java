@@ -1,5 +1,7 @@
 package com.mycompany.util;
 
+
+
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;

@@ -12,55 +12,88 @@
     </h:head>
 
     <h:body>
-        <div align="center">
+        <div align="left">
             <h:form>
-               <h1>BIENVENID@: #{loginBean.user}</h1>
-                <span style="font-size: 100px; color: Dodgerblue;">
-                    <i class="fas fa-user-secret "></i>
-                </span><br/>
+                <h1>BIENVENID@: #{loginBean.user}</h1>
+
+
                 <h:commandLink action="#{loginBean.logout()}" value="CERRAR SESION"></h:commandLink>
             </h:form>
-
-            <h:form id="frmPrincipal">
-                <h1>PERSONAS</h1>
-
+        </div>
+        <p:growl autoUpdate="true" showDetail="true" showSummary="false"/>
+        <h:form id="frmPrincipal">
+            <div align="center">
+                <h1>LISTA DE PERSONAS REGISTRADAS</h1> 
+                <!-- <span style="font-size: 100px; color: Dodgerblue;">
+                     <i class="fas fa-user-secret "></i>
+                 </span><br/>-->
                 <a  onclick="PF('wdialogo').show();" actionListener="#{loginBean.setAccion('R')}" update=":frmDialogo">
                     <i class="fas fa-user-plus fa-1x">NUEVO</i>
                 </a>
-                <p:panel id="lista" header="Usuarios" style="margin-bottom: 20px; width: 300px; height: 600px">
-                    <p:dataTable id="tabla" emptyMessage="No hay registros" value="#{loginBean.usuarios}" var="us">
+                <p:panel id="lista" header="Usuarios" style="margin-bottom: 20px; width: 600px; height: 700px" >
+                    <p:dataTable id="tabla" emptyMessage="No hay registros" value="#{loginBean.usuarios}" var="us" editable="true" >
+                        <p:column  headerText="Editar" style="width: 50px">
+                            <p:rowEditor/>
+                        </p:column>
                         <p:column headerText="Nombre" filterBy="#{us.user}" filterMatchMode="contains">
-                            <h:outputText value="#{us.user}"/>
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{us.user}"/>
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:inputText value="#{us.user}"/>
+                                </f:facet>
+                            </p:cellEditor>
                         </p:column>
-                        <p:column  headerText="Editar">
-                            <p:commandLink  actionListener="#{loginBean.leer(us)}" oncomplete="PF('wdialogo').show();" update="dialogo">
-
-                            </p:commandLink>
+                        <p:column headerText="Password" >
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{us.password}"/>
+                                </f:facet>
+                                <f:facet name="input">                                                          
+                                    <p:password value="#{us.password}"/>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>  
+                        <p:column headerText="Eliminar">
+                            <p:commandButton value="Eliminar" actionListener="#{loginBean.eliminar(us)}" update="tabla" icon="ui-icon-trahs">
+                                <p:confirm message="Seguro que deseas eliminar al Usuario: #{us.user}?" header="Aviso" icon="ui-icon-alert"/>
+                            </p:commandButton>
                         </p:column>
+                        
+                        <p:ajax event="rowEdit" listener="#{loginBean.modificar(us)}" />
                     </p:dataTable>
                 </p:panel>
+            </div>
+              <p:commandButton value="Confirmacion" >
+                            <p:confirm header="Confirmacion" message="Esta seguro de realizar la edicion ?" icon="ui-icon-alert"/>                            
+                        </p:commandButton>
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                            <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" update="tabla"/>
+                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" update="tabla"/>
+                        </p:confirmDialog>
+        </h:form>
+        <p:dialog id="dialogo" widgetVar="wdialogo" header="NUEVO USUARIO" modal="true" resizable="false" closeOnEscape="true" draggable="false">
+
+            <h:form id="frmDialogo">
+                <h:panelGrid columns="2">
+                    <label>USERNAME:</label>     
+
+                    <p:inputText value="#{registerBean.user}" id="username"
+                                 required="true" requiredMessage="Falta el usuario"
+                                 label="USERNAME:"/>
+                    <label>CONTRASEÑA:</label>    
+                    <p:password value="#{registerBean.password}" id="password" 
+                                required="true" requiredMessage="Falta la contraseña"
+                                label="PASSWORD:"/>
+                    <p:commandButton value="Registrar" icon="ui-icon-check" update=":frmPrincipal:tabla"  actionListener="#{registerBean.register}" oncomplete="PF('wdialogo').hide();" rendered="#{loginBean.accion == 'R'}"/>
+
+                    <p:commandButton value="Modificar" icon="ui-icon-check" update=":frmPrincipal:tabla"  actionListener="#{registerBean.newUser()}" oncomplete="PF('wdialogo').hide();" rendered="#{loginBean.accion == 'M'}"/>
+                    <p:commandButton value="Cancelar" icon="ui-icon-close" immediate="true" onclick="PF('wdialogo').hide();" />
+
+                </h:panelGrid>
             </h:form>
-            <p:dialog id="dialogo" widgetVar="wdialogo" header="NUEVO USUARIO" modal="true" resizable="false" closeOnEscape="true" draggable="false">
-
-                <h:form id="frmDialogo">
-                    <h:panelGrid columns="2">
-                        <label>USERNAME:</label>     
-
-                        <p:inputText value="#{registerBean.user}" id="username"
-                                     required="true" requiredMessage="Falta el usuario"
-                                     label="USERNAME:"/>
-                        <label>CONTRASEÑA:</label>    
-                        <p:password value="#{registerBean.password}" id="password" 
-                                    required="true" requiredMessage="Falta la contraseña"
-                                    label="PASSWORD:"/>
-                        <p:commandButton value="Registrar" icon="ui-icon-check" update=":frmPrincipal:tabla"  actionListener="#{registerBean.register}" oncomplete="PF('wdialogo').hide();" rendered="#{loginBean.accion == 'R'}"/>
-                        
-                        <p:commandButton value="Modificar" icon="ui-icon-check" update=":frmPrincipal:tabla"  actionListener="#{registerBean.newUser()}" oncomplete="PF('wdialogo').hide();" rendered="#{loginBean.accion == 'M'}"/>
-                        <p:commandButton value="Cancelar" icon="ui-icon-close" immediate="true" onclick="PF('wdialogo').hide();" />
-
-                    </h:panelGrid>
-                </h:form>
-            </p:dialog>
+        </p:dialog>
 
 
 
@@ -92,25 +125,25 @@
 
 
 
-            <!-- <p:panel id="lista" header="Usuarios" style="margin-bottom: 20px; width: 300px; height: 600px">
-                <p:dataTable var="usuario" value="#{loginBean.usuarios}" rows="15" 
-                             paginator="true">
-                    <p:column headerText="Id">
-                        <h:outputText value="#{usuario.idLogin}"/>
-                    </p:column>
-                    <p:column headerText="" filterBy="#{usuario.user}" footerText="exact" filterMatchMode="exact">
-                        <h:outputText value="#{usuario.user}"/>
-                    </p:column>
-                    <p:column headerText="Editar">                       
-                        <h:link outcome="admin" value="editar"/>
+        <!-- <p:panel id="lista" header="Usuarios" style="margin-bottom: 20px; width: 300px; height: 600px">
+            <p:dataTable var="usuario" value="{loginBean.usuarios}" rows="15" 
+                         paginator="true">
+                <p:column headerText="Id">
+                    <h:outputText value="{usuario.idLogin}"/>
+                </p:column>
+                <p:column headerText="" filterBy="{usuario.user}" footerText="exact" filterMatchMode="exact">
+                    <h:outputText value="{usuario.user}"/>
+                </p:column>
+                <p:column headerText="Editar">                       
+                    <h:link outcome="admin" value="editar"/>
     
-                    </p:column>
-                </p:dataTable>
-            </p:panel>
-        </div>
-        <div>
-            <h:link outcome="admin" value="AGREGAR  NUEVA PERSONA"/> -->
-        </div>
+                </p:column>
+            </p:dataTable>
+        </p:panel>
+    </div>
+    <div>
+        <h:link outcome="admin" value="AGREGAR  NUEVA PERSONA"/> -->
+
 
 
 

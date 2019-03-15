@@ -28,8 +28,9 @@ public class Usuario implements Serializable {
     private String user;
     @Column(nullable = false, columnDefinition = "varchar(30)")
     private String password;
-    
   
+   
+ 
     /**
      * @return the idUsuario
      */
@@ -73,7 +74,7 @@ public class Usuario implements Serializable {
         this.user = user;
     }
 
-    /**
-     * @return the persona
-     */
+    
+
+    
 }

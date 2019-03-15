@@ -9,6 +9,7 @@ import com.mycompany.DAO.DataSource;
 import com.mycompany.DAO.UsuarioDao;
 import static com.mycompany.bean.LoginBean.getLista;
 import com.mycompany.dominio.Usuario;
+import com.mycompany.ucc.Usuarioucc;
 import com.mycompany.util.SessionUtils;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,11 +38,12 @@ public class LoginBean {
     private List<Usuario> usuarios = null;
     private Usuario usuario24;
     private static List<Usuario> lista = new ArrayList();
+    
 
     public List<Usuario> getUsuario() {
         UsuarioDao ud = new UsuarioDao(usuario24);
         usuarios = ud.buscarTodos();
-        System.out.println("USER:"+usuarios);
+        System.out.println("USER:" + usuarios);
         return usuarios;
     }
 
@@ -127,8 +129,8 @@ public class LoginBean {
         FacesContext.getCurrentInstance().addMessage(null, msg);
         context.addCallbackParam("estaLogeado", isLogeado());
         if (isLogeado()) {
-           
-            context.addCallbackParam("view", "/login/faces/home.xhtml");
+            System.out.println("hola");
+            context.addCallbackParam("view", "faces/home.xhtml");
         } else if (estado == false) {
             context.addCallbackParam("view", "/index.xhtml");
         }
@@ -163,16 +165,29 @@ public class LoginBean {
     /**
      * @return the lista
      */
-    
-    public void leer (Usuario usuario){
-       usuario24 = usuario;
-       this.setAccion("M");
-        
+    public void leer(Usuario usuario) {
+        usuario24 = usuario;
+        this.setAccion("M");
+
     }
-   public void modificar(){
-       UsuarioDao ud = new UsuarioDao(usuario24);
-       ud.editarUsuario(usuario24);
-   }
+
+    public void modificar(Usuario us) {
+        System.out.println("Usuario editado" + user);
+
+        Usuarioucc ucc = new Usuarioucc();
+        ucc.editarUsuario(us);
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Se edito correctamente"));
+    }
+
+    public void eliminar(Usuario us) {
+        System.out.println("Usuario eliminado" + us);
+
+        Usuarioucc ucc = new Usuarioucc();
+        ucc.deleteUsuario(us);
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Se ha eliminado correctamente"));
+
+    }
+
     /**
      * @return the accion
      */
@@ -186,4 +201,9 @@ public class LoginBean {
     public void setAccion(String accion) {
         this.accion = accion;
     }
+
+    /**
+     * @return the selected
+     */
+ 
 }

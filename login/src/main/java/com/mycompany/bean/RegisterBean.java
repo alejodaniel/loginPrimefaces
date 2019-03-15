@@ -5,6 +5,7 @@
  */
 package com.mycompany.bean;
 
+import com.mycompany.DAO.DataSource;
 import com.mycompany.DAO.UsuarioDao;
 import com.mycompany.dominio.Usuario;
 import java.util.List;
@@ -71,6 +72,8 @@ public class RegisterBean {
         if (estado == true) {
             msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "El Usuario y contraseña fueron guardados correctamente", user);
             setLogeado(true);
+            DataSource dt = new DataSource();
+            dt.getEntityManager();
             
            
         } else {

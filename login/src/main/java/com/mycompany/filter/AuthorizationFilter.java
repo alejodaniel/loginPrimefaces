@@ -32,7 +32,7 @@ public class AuthorizationFilter implements Filter {
         HttpServletResponse res = (HttpServletResponse) response;
 
         //Obtengo el bean que representa al usuario donde el scoped session
-        LoginBean login = (LoginBean) req.getSession().getAttribute("login");
+        LoginBean loginBean = (LoginBean) req.getSession().getAttribute("loginBean");
 
         //aqui se procesa la URL que esta refieriendo al clente 
         String urlStr = req.getRequestURL().toString().toLowerCase();
@@ -44,20 +44,26 @@ public class AuthorizationFilter implements Filter {
             return;
         }
         //el usuario no esta logueado
-        if (login == null || !login.isLogeado()) {
+        if (loginBean == null || !loginBean.isLogeado()) {
             res.sendRedirect(req.getContextPath() + "/index.xhtml");
             return;
         }
+        //El recurso requiere proteccion , pero el usuario ya esta logueado
+        chain.doFilter(request, response);
     }
-    private boolean noProteger(String urlStr){
-     /*Aqui se coloca todas las rutas que no queramos que esten sin looguearse*/
-        if (urlStr.indexOf("/index.xhtml") != -1 || urlStr.indexOf("/registro.xhtml") != -1 || urlStr.indexOf("/home.xhtml") != -1 || urlStr.indexOf("/admin.xhtml") != -1) 
+
+    private boolean noProteger(String urlStr) {
+        /*Aqui se coloca todas las rutas que no queramos que esten sin looguearse*/
+        if (urlStr.indexOf("/index.xhtml") != -1 || urlStr.indexOf("/registro.xhtml") != -1) 
             return true;
+        
 
         if (urlStr.indexOf("/javax.faces.resource/") != -1) 
             return true;
-           return false;
+        
+        return false;
     }
+
     @Override
     public void destroy() {
 
