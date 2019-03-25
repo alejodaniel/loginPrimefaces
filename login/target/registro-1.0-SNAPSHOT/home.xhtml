@@ -14,10 +14,10 @@
     <h:body>
         <div align="left">
             <h:form>
-                <h1>BIENVENID@: #{loginBean.user}</h1>
+                <h1>BIENVENID@: #{actionBean.user}</h1>
 
 
-                <h:commandLink action="#{loginBean.logout()}" value="CERRAR SESION"></h:commandLink>
+                <h:commandLink action="#{actionBean.logout()}" value="CERRAR SESION"></h:commandLink>
             </h:form>
         </div>
         <p:growl autoUpdate="true" showDetail="true" showSummary="false"/>
@@ -27,11 +27,13 @@
                 <!-- <span style="font-size: 100px; color: Dodgerblue;">
                      <i class="fas fa-user-secret "></i>
                  </span><br/>-->
-                <a  onclick="PF('wdialogo').show();" actionListener="#{loginBean.setAccion('R')}" update=":frmDialogo">
+                <a  onclick="PF('wdialogo').show();" actionListener="#{actionBean.setAccion('R')}" update=":frmDialogo">
                     <i class="fas fa-user-plus fa-1x">NUEVO</i>
                 </a>
                 <p:panel id="lista" header="Usuarios" style="margin-bottom: 20px; width: 600px; height: 700px" >
-                    <p:dataTable id="tabla" emptyMessage="No hay registros" value="#{loginBean.usuarios}" var="us" editable="true" >
+                    <p:dataTable id="tabla" emptyMessage="No hay registros"
+                                 
+                                 value="#{actionBean.usuarios}" var="us" editable="true" >
                         <p:column  headerText="Editar" style="width: 50px">
                             <p:rowEditor/>
                         </p:column>
@@ -56,12 +58,12 @@
                             </p:cellEditor>
                         </p:column>  
                         <p:column headerText="Eliminar">
-                            <p:commandButton value="Eliminar" actionListener="#{loginBean.eliminar(us)}" update="tabla" icon="ui-icon-trahs">
+                            <p:commandButton value="Eliminar" actionListener="#{actionBean.eliminar}" update="tabla" icon="ui-icon-trahs">
                                 <p:confirm message="Seguro que deseas eliminar al Usuario: #{us.user}?" header="Aviso" icon="ui-icon-alert"/>
                             </p:commandButton>
                         </p:column>
                         
-                        <p:ajax event="rowEdit" listener="#{loginBean.modificar(us)}" />
+                        <p:ajax event="rowEdit" listener="#{actionBean.modificar}" />
                     </p:dataTable>
                 </p:panel>
             </div>

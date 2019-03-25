@@ -10,6 +10,7 @@ com\mycompany\bean\RegisterBean.class
 com\mycompany\initListener\initListener.class
 com\mycompany\filter\AuthorizationFilter.class
 com\mycompany\dominio\Personas_.class
+com\mycompany\bean\ActionBean.class
 com\mycompany\DAO\ConfigXml.class
 com\mycompany\ucc\Usuarioucc.class
 com\mycompany\util\SessionUtils.class

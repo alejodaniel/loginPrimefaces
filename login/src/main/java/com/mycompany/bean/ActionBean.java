@@ -5,7 +5,6 @@
  */
 package com.mycompany.bean;
 
-
 import com.mycompany.DAO.UsuarioDao;
 import com.mycompany.dominio.Usuario;
 import com.mycompany.ucc.Usuarioucc;
@@ -15,10 +14,11 @@ import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.component.UIData;
+//import javax.faces.component.UIData;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpSession;
+import org.primefaces.component.api.UIData;
 
 /**
  *
@@ -39,18 +39,21 @@ public class ActionBean {
     private UIData datosObtenidos;
 
     public ActionBean() {
-
+        System.out.println("6h52562o65mea///////////////");
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
         LoginBean lv = (LoginBean) session.getAttribute("loginBean");
         user = lv.getUser();
         usuarios = lv.getUsuarios();
+        System.out.println("dasaa464++++++++++++++++++");
     }
 
-    public void editUser(ActionEvent event){
-        System.out.println("Se selecciono"+((Usuario)datosObtenidos.getRowData()));
-        
-        
-    }
+//    public void obtener(ActionEvent event){
+//        UIData data = (UIData) event.getComponent().findComponent("lista");
+//        ActionBean ab = (ActionBean) data.getRowData();
+//        int rowIndex = data.getRowIndex();
+//        
+//        
+//    }
     public List<Usuario> getUsuario() {
         UsuarioDao ud = new UsuarioDao(usuario24);
         usuarios = ud.buscarTodos();
@@ -62,19 +65,16 @@ public class ActionBean {
         System.out.println("El Usuario :" + us + "fue editado correctamente");
         Usuarioucc ucc = new Usuarioucc();
         ucc.editarUsuario(us);
-      
+
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Se edito correctamente"));
     }
 
-    public void eliminar(Usuario us) {
-        System.out.println("El Usuario :" + us + "fue eliminado por :" + user);
-        Usuarioucc ucc = new Usuarioucc();
-        if (ucc.deleteUsuario(us) == true) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "El usuario:" + us + "se ha eliminado correctamente"));
-        } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Aviso", "El usuario:" + us + "no se ha eliminado"));
-        }
-
+    public void eliminar(ActionEvent event) {
+        Usuario u = (Usuario) datosObtenidos.getRowData();
+        System.out.println("se ha seleccionado la tabla: " + u.getUser());
+       Usuarioucc ucc = new Usuarioucc();
+        ucc.deleteUsuario(u);
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Se ha eliminado correctamente"));
     }
 
     public void listar() {
