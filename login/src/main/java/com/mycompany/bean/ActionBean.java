@@ -72,17 +72,13 @@ public class ActionBean {
     public void eliminar(ActionEvent event) {
         Usuario u = (Usuario) datosObtenidos.getRowData();
         System.out.println("se ha seleccionado la tabla: " + u.getUser());
-       Usuarioucc ucc = new Usuarioucc();
-        ucc.deleteUsuario(u);
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Se ha eliminado correctamente"));
-    }
-
-    public void listar() {
-        Usuario u = new Usuario();
-        u.setIdLogin(1);
-        u.setUser(getUser());
-        u.setPassword(getPassword());
-        getLista().add(u);
+        Usuarioucc ucc = new Usuarioucc();
+        if (ucc.deleteUsuario(u) == true) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "El usuario " + u + "fue eliminado correctamente"));
+            getUsuario();
+        }else{
+             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Aviso", "El usuario " + u + "no fue eliminado correctamente"));
+        }
 
     }
 

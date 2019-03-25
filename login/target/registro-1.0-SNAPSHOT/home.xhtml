@@ -32,7 +32,7 @@
                 </a>
                 <p:panel id="lista" header="Usuarios" style="margin-bottom: 20px; width: 600px; height: 700px" >
                     <p:dataTable id="tabla" emptyMessage="No hay registros"
-                                 
+                                 binding="#{actionBean.datosObtenidos}"
                                  value="#{actionBean.usuarios}" var="us" editable="true" >
                         <p:column  headerText="Editar" style="width: 50px">
                             <p:rowEditor/>
@@ -58,22 +58,20 @@
                             </p:cellEditor>
                         </p:column>  
                         <p:column headerText="Eliminar">
-                            <p:commandButton value="Eliminar" actionListener="#{actionBean.eliminar}" update="tabla" icon="ui-icon-trahs">
+                            <p:commandButton value="Eliminar"     
+                                             actionListener="#{actionBean.eliminar}" update="tabla" icon="ui-icon-trahs">
                                 <p:confirm message="Seguro que deseas eliminar al Usuario: #{us.user}?" header="Aviso" icon="ui-icon-alert"/>
                             </p:commandButton>
                         </p:column>
-                        
-                        <p:ajax event="rowEdit" listener="#{actionBean.modificar}" />
+
+                        <p:ajax event="rowEdit" listener="#{actionBean.modificar(us)}" />
                     </p:dataTable>
                 </p:panel>
             </div>
-              <p:commandButton value="Confirmacion" >
-                            <p:confirm header="Confirmacion" message="Esta seguro de realizar la edicion ?" icon="ui-icon-alert"/>                            
-                        </p:commandButton>
-                        <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
-                            <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" update="tabla"/>
-                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" update="tabla"/>
-                        </p:confirmDialog>
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" update="tabla"/>
+                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" update="tabla"/>
+            </p:confirmDialog>
         </h:form>
         <p:dialog id="dialogo" widgetVar="wdialogo" header="NUEVO USUARIO" modal="true" resizable="false" closeOnEscape="true" draggable="false">
 
@@ -88,66 +86,11 @@
                     <p:password value="#{registerBean.password}" id="password" 
                                 required="true" requiredMessage="Falta la contraseña"
                                 label="PASSWORD:"/>
-                    <p:commandButton value="Registrar" icon="ui-icon-check" update=":frmPrincipal:tabla"  actionListener="#{registerBean.register}" oncomplete="PF('wdialogo').hide();" rendered="#{loginBean.accion == 'R'}"/>
-
-                    <p:commandButton value="Modificar" icon="ui-icon-check" update=":frmPrincipal:tabla"  actionListener="#{registerBean.newUser()}" oncomplete="PF('wdialogo').hide();" rendered="#{loginBean.accion == 'M'}"/>
+                    <p:commandButton value="Registrar" icon="ui-icon-check" update=":frmPrincipal:tabla"  actionListener="#{registerBean.register}" oncomplete="PF('wdialogo').hide();" rendered="#{actionBean.accion == 'R'}"/>
                     <p:commandButton value="Cancelar" icon="ui-icon-close" immediate="true" onclick="PF('wdialogo').hide();" />
 
                 </h:panelGrid>
             </h:form>
         </p:dialog>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        <!-- <p:panel id="lista" header="Usuarios" style="margin-bottom: 20px; width: 300px; height: 600px">
-            <p:dataTable var="usuario" value="{loginBean.usuarios}" rows="15" 
-                         paginator="true">
-                <p:column headerText="Id">
-                    <h:outputText value="{usuario.idLogin}"/>
-                </p:column>
-                <p:column headerText="" filterBy="{usuario.user}" footerText="exact" filterMatchMode="exact">
-                    <h:outputText value="{usuario.user}"/>
-                </p:column>
-                <p:column headerText="Editar">                       
-                    <h:link outcome="admin" value="editar"/>
-    
-                </p:column>
-            </p:dataTable>
-        </p:panel>
-    </div>
-    <div>
-        <h:link outcome="admin" value="AGREGAR  NUEVA PERSONA"/> -->
-
-
-
-
-    </h:body>
+   </h:body>
 </html>

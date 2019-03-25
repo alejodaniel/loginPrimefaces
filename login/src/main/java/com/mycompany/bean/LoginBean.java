@@ -87,7 +87,7 @@ public class LoginBean {
 
             setLogeado(true);
         } else {
-            msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "ERROR AL ACCEDER", "Credenciales incorrectos");
+            msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "ERROR AL ACCEDER","Credenciales incorrectos");
             setLogeado(false);
         }
         FacesContext.getCurrentInstance().addMessage(null, msg);
