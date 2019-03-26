@@ -5,6 +5,7 @@
  */
 package com.mycompany.DAO;
 
+import com.mycompany.bean.LoginBean;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -24,6 +25,8 @@ public class DataSource {
             em = emf.createEntityManager();
             if (em == getEntityManager()) {
                 System.out.println("EJEMPLO EXITOSO");
+                LoginBean lb = new LoginBean();
+                lb.ingresoAdmin();
 
             } else {
             }

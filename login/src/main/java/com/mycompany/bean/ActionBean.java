@@ -5,6 +5,7 @@
  */
 package com.mycompany.bean;
 
+import com.mycompany.DAO.DataSource;
 import com.mycompany.DAO.UsuarioDao;
 import com.mycompany.dominio.Usuario;
 import com.mycompany.ucc.Usuarioucc;
@@ -19,6 +20,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpSession;
 import org.primefaces.component.api.UIData;
+import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -34,7 +36,7 @@ public class ActionBean {
     private String password;
     private boolean logeado = false;
     private List<Usuario> usuarios = null;
-    private Usuario usuario24;
+    private Usuario usuarioBase;
     private static List<Usuario> lista = new ArrayList();
     private UIData datosObtenidos;
 
@@ -55,7 +57,7 @@ public class ActionBean {
 //        
 //    }
     public List<Usuario> getUsuario() {
-        UsuarioDao ud = new UsuarioDao(usuario24);
+        UsuarioDao ud = new UsuarioDao(usuarioBase);
         usuarios = ud.buscarTodos();
         System.out.println("USER:" + usuarios);
         return usuarios;
@@ -76,8 +78,40 @@ public class ActionBean {
         if (ucc.deleteUsuario(u) == true) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "El usuario " + u + "fue eliminado correctamente"));
             getUsuario();
-        }else{
-             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Aviso", "El usuario " + u + "no fue eliminado correctamente"));
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Aviso", "El usuario " + u + "no fue eliminado correctamente"));
+        }
+
+    }
+
+    public void register(ActionEvent action) {
+        UsuarioDao usuarioDao = new UsuarioDao(usuarioBase);
+        System.out.println("user:" + user);
+        System.out.println("pass:" + password);
+        RequestContext context = RequestContext.getCurrentInstance();
+        FacesMessage msg = null;
+        Usuario us = new Usuario();
+        us.setUser(getUser());
+        us.setPassword(getPassword());
+
+        boolean estado = usuarioDao.guardarUsuario(us);
+        if (estado == true) {
+            msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "El Usuario y contraseña fueron guardados correctamente", user);
+            setLogeado(true);
+            getUsuario();
+            // DataSource dt = new DataSource();
+            // dt.getEntityManager();
+
+        } else {
+            msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "No se guardaron los datos ingresados", null);
+            setLogeado(false);
+        }
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+        context.addCallbackParam("estaLogeado", isLogeado());
+        if (isLogeado()) {
+            context.addCallbackParam("view", "index.xhtml");
+        } else if (estado == false) {
+            context.addCallbackParam("view", "home.xhtml");
         }
 
     }
@@ -134,7 +168,7 @@ public class ActionBean {
     }
 
     public void leer(Usuario usuario) {
-        usuario24 = usuario;
+        usuarioBase = usuario;
         this.setAccion("M");
 
     }

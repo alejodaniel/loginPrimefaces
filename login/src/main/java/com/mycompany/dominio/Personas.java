@@ -5,11 +5,13 @@
  */
 package com.mycompany.dominio;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -36,9 +38,12 @@ public class Personas {
     @Column(nullable = false, columnDefinition = "varchar(10)")
     private String celular;
 
-    /**
-     * @return the idLogin
-     */
+//     //el atributo persona no se relaciona con esta clase si no con la clase Persona creada 
+//    @OneToOne(mappedBy = "persona", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private Usuario usuario;
+//    /**
+////     * @return the idLogin
+//     */
     public int getIdLogin() {
         return idLogin;
     }
@@ -133,5 +138,19 @@ public class Personas {
     public void setCelular(String celular) {
         this.celular = celular;
     }
+
+    /**
+     * @return the usuario
+     */
+//    public Usuario getUsuario() {
+//        return usuario;
+//    }
+//
+//    /**
+//     * @param usuario the usuario to set
+//     */
+//    public void setUsuario(Usuario usuario) {
+//        this.usuario = usuario;
+//    }
 
 }

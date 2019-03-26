@@ -40,13 +40,12 @@ public class LoginBean {
     private List<Usuario> usuarios = null;
     private Usuario usuario24;
     private static List<Usuario> lista = new ArrayList();
-   
-    
 
-      public LoginBean() {
+    public LoginBean() {
         DataSource.getEntityManager();
-
+       // ingresoAdmin();
     }
+
     public List<Usuario> getUsuario() {
         UsuarioDao ud = new UsuarioDao(usuario24);
         usuarios = ud.buscarTodos();
@@ -54,6 +53,19 @@ public class LoginBean {
         return usuarios;
     }
 
+    public void ingresoAdmin() {
+        UsuarioDao ud = new UsuarioDao(null);
+        boolean estado = ud.insertarAdmin();
+        if (estado == false) {
+            System.out.println("no se encontraron registros en la base de datos");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL,"Aviso","No se encuantran registros en la base de datos"));
+        }else{
+            System.out.println("Si existen registros en la base de datos");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Aviso","Si existen registros en la base de datos"));
+        }
+                
+            
+    }
 //    public void obtener(ActionEvent event) {
 //        System.out.println("dato seleccionado");
 //        UIData data = (UIData) event.getComponent().findComponent("lista");
@@ -73,6 +85,7 @@ public class LoginBean {
 
     public void login(ActionEvent action) {
         this.getUsuario();
+
         RequestContext context = RequestContext.getCurrentInstance();
         FacesMessage msg = null;
         // Usuario us = new Usuario();
@@ -87,7 +100,7 @@ public class LoginBean {
 
             setLogeado(true);
         } else {
-            msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "ERROR AL ACCEDER","Credenciales incorrectos");
+            msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "Credenciales incorrectos", "Credenciales incorrectos");
             setLogeado(false);
         }
         FacesContext.getCurrentInstance().addMessage(null, msg);
@@ -100,15 +113,14 @@ public class LoginBean {
         }
 
     }
-     public void modificar(Usuario us) {
+
+    public void modificar(Usuario us) {
         System.out.println("El Usuario  :" + us + "fue editado correctamente");
 
         Usuarioucc ucc = new Usuarioucc();
         ucc.editarUsuario(us);
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Se edito correctamente"));
     }
-
-    
 
     public String action() {
         logeado = true;
@@ -184,6 +196,7 @@ public class LoginBean {
     public void setLogeado(boolean logeado) {
         this.logeado = logeado;
     }
+
     /**
      * @return the lista
      */
@@ -193,7 +206,6 @@ public class LoginBean {
 
     }
 
-   
     /**
      * @return the accion
      */
@@ -207,6 +219,5 @@ public class LoginBean {
     public void setAccion(String accion) {
         this.accion = accion;
     }
-
 
 }

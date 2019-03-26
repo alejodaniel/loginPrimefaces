@@ -9,6 +9,7 @@ com\mycompany\dominio\Usuario_.class
 com\mycompany\bean\RegisterBean.class
 com\mycompany\initListener\initListener.class
 com\mycompany\filter\AuthorizationFilter.class
+com\mycompany\DAO\PersonaDao.class
 com\mycompany\dominio\Personas_.class
 com\mycompany\bean\ActionBean.class
 com\mycompany\DAO\ConfigXml.class

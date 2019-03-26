@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -28,7 +29,9 @@ public class Usuario implements Serializable {
     private String user;
     @Column(nullable = false, columnDefinition = "varchar(30)")
     private String password;
-  
+    
+//     @OneToOne
+//    private Personas personas;
    
  
     /**
@@ -73,6 +76,20 @@ public class Usuario implements Serializable {
     public void setUser(String user) {
         this.user = user;
     }
+
+    /**
+     * @return the personas
+     */
+//    public Personas getPersonas() {
+//        return personas;
+//    }
+//
+//    /**
+//     * @param personas the personas to set
+//     */
+//    public void setPersonas(Personas personas) {
+//        this.personas = personas;
+//    }
 
     
 

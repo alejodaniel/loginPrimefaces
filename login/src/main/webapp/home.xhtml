@@ -12,6 +12,7 @@
     </h:head>
 
     <h:body>
+       
         <div align="left">
             <h:form>
                 <h1>BIENVENID@: #{actionBean.user}</h1>
@@ -77,16 +78,17 @@
 
             <h:form id="frmDialogo">
                 <h:panelGrid columns="2">
+                    
                     <label>USERNAME:</label>     
 
-                    <p:inputText value="#{registerBean.user}" id="username"
+                    <p:inputText value="#{actionBean.user}" id="username"
                                  required="true" requiredMessage="Falta el usuario"
                                  label="USERNAME:"/>
                     <label>CONTRASEÑA:</label>    
-                    <p:password value="#{registerBean.password}" id="password" 
+                    <p:password value="#{actionBean.password}" id="password" 
                                 required="true" requiredMessage="Falta la contraseña"
                                 label="PASSWORD:"/>
-                    <p:commandButton value="Registrar" icon="ui-icon-check" update=":frmPrincipal:tabla"  actionListener="#{registerBean.register}" oncomplete="PF('wdialogo').hide();" rendered="#{actionBean.accion == 'R'}"/>
+                    <p:commandButton value="Registrar" icon="ui-icon-check" update=":frmPrincipal:tabla"  actionListener="#{actionBean.register}" oncomplete="PF('wdialogo').hide();" rendered="#{actionBean.accion == 'R'}"/>
                     <p:commandButton value="Cancelar" icon="ui-icon-close" immediate="true" onclick="PF('wdialogo').hide();" />
 
                 </h:panelGrid>
